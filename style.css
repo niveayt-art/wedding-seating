@@ -103,15 +103,16 @@ body {
     margin: 24px auto 40px;
     padding: 28px 22px 24px;
 
-    background: rgba(255, 251, 244, 0.78);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    /* make the card more translucent so the hero photo shows through */
+    background: rgba(255, 251, 244, 0.52);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
 
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: var(--radius-xl);
     box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.9) inset,
-        var(--shadow-lg);
+        0 1px 0 rgba(255, 255, 255, 0.6) inset,
+        var(--shadow-md);
 
     animation: cardIn 0.7s cubic-bezier(.2,.8,.2,1) both;
 }
