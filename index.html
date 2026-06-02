@@ -1,58 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <title>Find Your Seat</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">
+    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>
+    <link href=\"https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">
 
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <link rel=\"stylesheet\" href=\"style.css\">
+
+    <script src=\"https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js\"></script>
 </head>
 
 <body>
 
-<div class="overlay"></div>
+<!-- Hero photo background -->
+<div class=\"bg-photo\" aria-hidden=\"true\"></div>
+<div class=\"bg-tint\" aria-hidden=\"true\"></div>
+<div class=\"grain\" aria-hidden=\"true\"></div>
 
-<div class="container">
+<main class=\"container\" data-testid=\"seat-finder-container\">
 
-    <div class="hero">
-        <h1 id="coupleName">Welcome</h1>
-        <p>Find your seat by typing your name</p>
-    </div>
+    <header class=\"hero\">
+        <span class=\"hero__eyebrow\" data-testid=\"hero-eyebrow\">
+            <span class=\"dot\"></span> Woohoo, You're Here
+        </span>
+        <h1 id=\"coupleName\" data-testid=\"couple-name\">Welcome</h1>
+        <p class=\"hero__sub\" data-testid=\"hero-subtitle\">Type your name to reveal your table</p>
+    </header>
 
-    <div class="search-box">
-        <input
-            type="text"
-            id="guestSearch"
-            placeholder="Type your name..."
-            autocomplete="off"
-        >
-        <div id="suggestions"></div>
-    </div>
+    <section class=\"search-box\" data-testid=\"search-section\">
+        <div class=\"search-field\">
+            <svg class=\"search-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">
+                <circle cx=\"11\" cy=\"11\" r=\"7\"></circle>
+                <line x1=\"20\" y1=\"20\" x2=\"16.65\" y2=\"16.65\"></line>
+            </svg>
+            <input
+                type=\"text\"
+                id=\"guestSearch\"
+                placeholder=\"Type your name...\"
+                autocomplete=\"off\"
+                data-testid=\"guest-search-input\"
+            >
+        </div>
+        <div id=\"suggestions\" data-testid=\"suggestions-list\"></div>
+    </section>
 
-    <div id="result"></div>
+    <!-- Single seat reveal circle -->
+    <section class=\"seat-stage\" data-testid=\"seat-stage\">
+        <div id=\"seatCircle\" class=\"seat-circle is-empty\" data-testid=\"seat-circle\">
+            <span class=\"seat-circle__empty\" data-testid=\"seat-empty-label\">
+                <svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">
+                    <circle cx=\"12\" cy=\"12\" r=\"9\"></circle>
+                    <line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"13\"></line>
+                    <circle cx=\"12\" cy=\"16.5\" r=\"0.6\" fill=\"currentColor\"></circle>
+                </svg>
+                <span>Your table appears here</span>
+            </span>
 
-    <h2 class="section-title">Seating Plan</h2>
+            <div class=\"seat-circle__reveal\">
+                <span class=\"seat-circle__label\" data-testid=\"seat-label\">Table</span>
+                <span id=\"seatNumber\" class=\"seat-circle__num\" data-testid=\"seat-number\"></span>
+                <span id=\"seatGuest\" class=\"seat-circle__guest\" data-testid=\"seat-guest\"></span>
+            </div>
+        </div>
+    </section>
 
-    <div id="seatingChart">
-        <div class="table" data-table="1">1</div>
-        <div class="table" data-table="2">2</div>
-        <div class="table" data-table="3">3</div>
-        <div class="table" data-table="4">4</div>
-        <div class="table" data-table="5">5</div>
-        <div class="table" data-table="6">6</div>
-        <div class="table" data-table="7">7</div>
-        <div class="table" data-table="8">8</div>
-        <div class="table" data-table="9">9</div>
-        <div class="table" data-table="10">10</div>
-        <div class="table" data-table="11">11</div>
-        <div class="table" data-table="12">12</div>
-    </div>
+    <!-- Result text (kept for backwards-compat / screen reader announcements) -->
+    <div id=\"result\" class=\"visually-hidden\" aria-live=\"polite\" data-testid=\"result-card\"></div>
 
-</div>
+    <footer class=\"footer\">
+        <span>with love</span>
+        <svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"currentColor\" aria-hidden=\"true\">
+            <path d=\"M12 21s-7-4.35-9.33-9.18C1.18 8.43 3.06 5 6.5 5c2.04 0 3.5 1.16 4.5 2.5l1 1 1-1c1-1.34 2.46-2.5 4.5-2.5 3.44 0 5.32 3.43 3.83 6.82C19 16.65 12 21 12 21z\"/>
+        </svg>
+    </footer>
 
-<script src="script.js"></script>
+</main>
+
+<!-- Confetti canvas for selection celebration -->
+<div id=\"confetti\" class=\"confetti\" aria-hidden=\"true\"></div>
+
+<script src=\"script.js\"></script>
 
 </body>
 </html>
