@@ -224,6 +224,29 @@ body {
     transition: color .25s ease;
 }
 
+/* Clear (cancel) button inside the search field */
+.search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: rgba(43,18,51,0.06);
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+.search-clear:hover { background: rgba(43,18,51,0.10); color: var(--red); }
+.search-clear[hidden] { display: none; }
+
 .search-field:focus-within .search-icon {
     color: var(--red);
 }

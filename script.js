@@ -11,6 +11,7 @@ const seatCircle   = document.getElementById("seatCircle");
 const seatNumber   = document.getElementById("seatNumber");
 const seatGuest    = document.getElementById("seatGuest");
 const confettiRoot = document.getElementById("confetti");
+const clearBtn     = document.getElementById("clearSearch");
 
 const params  = new URLSearchParams(window.location.search);
 const eventId = params.get("event");
@@ -39,8 +40,27 @@ searchInput.addEventListener("input", () => {
   if (!searchInput.value.trim()) {
     resetSeat();
   }
+  // show/hide clear button
+  if (clearBtn) clearBtn.hidden = !searchInput.value.trim();
   handleSearch();
 });
+
+// allow Esc to clear
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && clearBtn && !clearBtn.hidden) {
+    clearBtn.click();
+  }
+});
+
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    suggestions.innerHTML = "";
+    clearBtn.hidden = true;
+    resetSeat();
+    searchInput.focus();
+  });
+}
 
 function handleSearch() {
   const term = searchInput.value.trim().toLowerCase();
@@ -65,6 +85,7 @@ function handleSearch() {
 function showGuest(guest) {
   suggestions.innerHTML = "";
   searchInput.value = guest.GuestName;
+  if (clearBtn) clearBtn.hidden = false;
 
   // Populate the single reveal circle
   seatNumber.textContent = guest.TableNumber ?? "";
