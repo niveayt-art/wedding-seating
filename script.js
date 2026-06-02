@@ -1,5 +1,5 @@
 const CSV_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSkU-7EO0VStM7Fikh4UFyWUn-vGZhAV3qS5vDsLgrDl1BJqvRFw7Q9jrU5OGWeyul4Eo5iMpg-bDYn/pub?gid=0&single=true&output=csv";
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vSkU-7EO0VStM7Fikh4UFyWUn-vGZhAV3qS5vDsLgrDl1BJqvRFw7Q9jrU5OGWeyul4Eo5iMpg-bDYn/pub?output=csv";
 
 let allGuests = [];
 let eventGuests = [];
@@ -9,26 +9,25 @@ const suggestions = document.getElementById("suggestions");
 const result = document.getElementById("result");
 
 const params = new URLSearchParams(window.location.search);
-
 const eventId = params.get("event");
 
 Papa.parse(CSV_URL, {
     download: true,
     header: true,
-
     complete: function(results) {
 
         allGuests = results.data;
 
-        eventGuests = allGuests.filter(
-            guest =>
-            guest.EventID === eventId
+        eventGuests = allGuests.filter(g =>
+            g.EventID?.trim().toLowerCase() ===
+            eventId?.trim().toLowerCase()
         );
 
-        if (eventGuests.length > 0) {
-
+        // optional couple name
+        const first = eventGuests[0];
+        if (first?.CoupleName) {
             document.getElementById("coupleName").textContent =
-                eventGuests[0].CoupleName || "Welcome To Our Wedding";
+                first.CoupleName;
         }
     }
 });
@@ -37,33 +36,24 @@ searchInput.addEventListener("input", handleSearch);
 
 function handleSearch() {
 
-    const term = searchInput.value
-        .toLowerCase()
-        .trim();
+    const term = searchInput.value.trim().toLowerCase();
 
     suggestions.innerHTML = "";
 
-    if (!term) {
-        return;
-    }
+    if (!term) return;
 
-    const matches = eventGuests.filter(guest =>
-        guest.GuestName
-            .toLowerCase()
-            .includes(term)
-    );
+    const matches = eventGuests
+        .filter(g =>
+            g.GuestName?.toLowerCase().includes(term)
+        )
+        .slice(0, 8);
 
-    matches.slice(0, 10).forEach(guest => {
-
+    matches.forEach(g => {
         const div = document.createElement("div");
-
         div.className = "suggestion";
+        div.textContent = g.GuestName;
 
-        div.textContent = guest.GuestName;
-
-        div.onclick = () => {
-            showGuest(guest);
-        };
+        div.onclick = () => showGuest(g);
 
         suggestions.appendChild(div);
     });
@@ -72,33 +62,25 @@ function handleSearch() {
 function showGuest(guest) {
 
     suggestions.innerHTML = "";
-
     searchInput.value = guest.GuestName;
 
     result.innerHTML = `
-        Welcome <strong>${guest.GuestName}</strong><br><br>
-        You are seated at<br>
-        <span class="highlight-text">
-            TABLE ${guest.TableNumber}
-        </span>
+        Welcome <br><strong>${guest.GuestName}</strong><br><br>
+        Table<br>
+        <span class="highlight-text"> ${guest.TableNumber} </span>
     `;
 
-    document
-        .querySelectorAll(".table")
-        .forEach(table =>
-            table.classList.remove("selected")
-        );
+    document.querySelectorAll(".table")
+        .forEach(t => t.classList.remove("selected"));
 
-    const selectedTable =
-        document.querySelector(
-            `[data-table="${guest.TableNumber}"]`
-        );
+    const table = document.querySelector(
+        `[data-table="${guest.TableNumber}"]`
+    );
 
-    if (selectedTable) {
+    if (table) {
+        table.classList.add("selected");
 
-        selectedTable.classList.add("selected");
-
-        selectedTable.scrollIntoView({
+        table.scrollIntoView({
             behavior: "smooth",
             block: "center"
         });
