@@ -327,7 +327,7 @@ body {
     text-align: center;
 
     background: rgba(255,255,255,0.66);
-    border: 1.5px dashed rgba(43, 18, 51, 0.12);
+    border: none;
     box-shadow: 0 10px 26px rgba(43,18,51,0.06);
 
     transition:
@@ -451,7 +451,7 @@ body {
     gap: 8px;
     margin-top: 28px;
     padding-top: 18px;
-    border-top: 1px dashed rgba(43, 18, 51, 0.12);
+    border-top: 1px solid rgba(43, 18, 51, 0.06);
     font-size: 11px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
