@@ -9,35 +9,33 @@
 
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
+
 <body>
+
+<div class="overlay"></div>
 
 <div class="container">
 
-    <h1 id="coupleName">Welcome to Our Wedding</h1>
+    <div class="hero">
+        <h1 id="coupleName">Welcome</h1>
+        <p>Find your seat by typing your name</p>
+    </div>
 
-    <p class="subtitle">
-        Find your table below
-    </p>
-
-    <div class="search-container">
-
+    <div class="search-box">
         <input
             type="text"
             id="guestSearch"
-            placeholder="Enter your name..."
+            placeholder="Type your name..."
             autocomplete="off"
         >
-
         <div id="suggestions"></div>
-
     </div>
 
     <div id="result"></div>
 
-    <h2>Seating Plan</h2>
+    <h2 class="section-title">Seating Plan</h2>
 
     <div id="seatingChart">
-
         <div class="table" data-table="1">1</div>
         <div class="table" data-table="2">2</div>
         <div class="table" data-table="3">3</div>
@@ -50,7 +48,6 @@
         <div class="table" data-table="10">10</div>
         <div class="table" data-table="11">11</div>
         <div class="table" data-table="12">12</div>
-
     </div>
 
 </div>
